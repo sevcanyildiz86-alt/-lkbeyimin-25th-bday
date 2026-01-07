@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>İyi ki varsın sevgilim</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+
+body{
+  background:black;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* START SCREEN */
+#start{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
+#start button{
+  padding:18px 40px;
+  font-size:22px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:black;
+}
+
+/* MAIN */
+#main{
+  display:none;
+  min-height:100vh;
+  background:white;
+  color:black;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding-top:40px;
+}
+
+/* TITLE */
+#title span{
+  font-size:42px;
+  font-weight:bold;
+}
+
+/* CAKE */
+#cake{
+  margin-top:80px;
+  width:300px;
+  height:140px;
+  background:#ffb6c1;
+  border-radius:25px;
+  position:relative;
+}
+#cake::before{
+  content:'';
+  position:absolute;
+  top:-40px;
+  left:15px;
+  width:270px;
+  height:40px;
+  background:#ffe4ec;
+  border-radius:25px 25px 0 0;
+}
+
+/* CANDLE */
+#candle{
+  width:22px;
+  height:80px;
+  background:#ff7675;
+  position:absolute;
+  top:-80px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:8px;
+}
+#flame{
+  width:28px;
+  height:45px;
+  background:orange;
+  border-radius:50%;
+  position:absolute;
+  top:-40px;
+  left:-3px;
+}
+
+/* BUTTON */
+#blowBtn{
+  margin-top:30px;
+  padding:14px 30px;
+  font-size:18px;
+  border:none;
+  background:#ff6b81;
+  color:white;
+  border-radius:30px;
+}
+
+/* HEARTS */
+.heart{
+  position:fixed;
+  font-size:46px;
+  animation:fly 4s linear forwards;
+}
+@keyframes fly{
+  to{transform:translateY(-120vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="music" preload="auto">
+  <source src="until-i-found-you.mp3" type="audio/mpeg">
+</audio>
+
+<!-- START -->
+<div id="start">
+  <h1>Open the lights ✨</h1>
+  <br>
+  <button onclick="startMusic()">Touch ✨</button>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="title"></div>
+
+  <div id="cake">
+    <div id="candle">
+      <div id="flame"></div>
+    </div>
+  </div>
+
+  <button id="blowBtn" onclick="blow()">Söndür 🎂</button>
+</div>
+
+<script>
+function startMusic(){
+  const music = document.getElementById("music");
+  music.currentTime = 0;
+  music.play(); // 🔴 iPhone’da ÇALIŞAN TEK YER
+
+  document.getElementById("start").style.display="none";
+  document.getElementById("main").style.display="flex";
+  document.body.style.background="white";
+
+  const text="İyi ki varsın sevgilim";
+  const colors=["red","orange","yellow","green","blue","purple","pink"];
+  let title=document.getElementById("title");
+
+  text.split("").forEach((l,i)=>{
+    let s=document.createElement("span");
+    s.textContent=l;
+    s.style.color=colors[i%colors.length];
+    title.appendChild(s);
+  });
+}
+
+function blow(){
+  document.getElementById("flame").style.display="none";
+
+  for(let i=0;i<30;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"%";
+    h.style.bottom="-40px";
+    h.style.animationDuration=3+Math.random()*2+"s";
+    document.body.appendChild(h);
+  }
+}
+</script>
+
+</body>
+</html>
